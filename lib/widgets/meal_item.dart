@@ -3,30 +3,35 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
-static const routeName = '/MealItem';
+  static const routeName = '/MealItem';
   final String id;
   final String title;
   final String imageUrl;
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
-  MealItem(
-      {@required this.id,
-        @required this.title,
-      @required this.imageUrl,
-      @required this.duration,
-      @required this.complexity,
-      @required this.affordability});
-
-  
+  MealItem({
+    @required this.id,
+    @required this.title,
+    @required this.imageUrl,
+    @required this.duration,
+    @required this.complexity,
+    @required this.affordability,
+    this.removeItem,
+  });
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: id);
+    Navigator.of(context)
+        .pushNamed(MealDetailScreen.routeName, arguments: id)
+        .then((result) {
+      if (result != null) /*removeItem(result)*/;
+    });
   }
 
   String get complexityText {
-    switch (complexity){
+    switch (complexity) {
       case Complexity.Simple:
         return 'Simple';
         break;
@@ -36,14 +41,13 @@ static const routeName = '/MealItem';
       case Complexity.Hard:
         return 'Hard';
         break;
-      default: 
+      default:
         return 'IDK';
     }
   }
 
-  
-   String get affordabilityText{
-    switch (affordability){
+  String get affordabilityText {
+    switch (affordability) {
       case Affordability.Affordable:
         return 'Affordable';
         break;
@@ -53,7 +57,7 @@ static const routeName = '/MealItem';
       case Affordability.Luxurious:
         return 'Luxurious';
         break;
-      default: 
+      default:
         return 'IDK';
     }
   }
@@ -114,7 +118,6 @@ static const routeName = '/MealItem';
                       Text('$duration min'),
                     ],
                   ),
-                  
                   Row(
                     children: <Widget>[
                       Icon(Icons.work),
@@ -124,7 +127,6 @@ static const routeName = '/MealItem';
                       Text(affordabilityText),
                     ],
                   ),
-
                   Row(
                     children: <Widget>[
                       Icon(Icons.attach_money),
